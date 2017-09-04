@@ -34,12 +34,12 @@ class Game
 
   def turn_count
     counter = 0
-    @board.cells.each do |move|
-    if move == 'X' || move == 'O'
-      counter += 1
+    @board.cells.each do |b|
+      if b == 'X' || b == 'O'
+        counter += 1
+      end
     end
-   end
-   return counter
+    return counter
   end
 
   def current_player
@@ -77,7 +77,7 @@ class Game
     index = 0
     player = current_player
     index = player.move(@board).to_i
-    if @board.valid_move?(index) == true &&  @board.position_taken?(index) == false
+    if @board.valid_move?(index) &&  !@board.position_taken?(index.to_i - 1)
       @board.update(index, player)
       @board.display
     else
@@ -94,6 +94,11 @@ class Game
     else
       puts "Congratulations #{winner}!"
     end
+  end
+
+  def call
+    @board.display
+    play
   end
 
 end
